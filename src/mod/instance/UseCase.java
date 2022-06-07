@@ -11,7 +11,7 @@ import bgWork.handler.CanvasPanelHandler;
 import mod.IClassPainter;
 import mod.IFuncComponent;
 
-public class UseCase extends JPanel implements IFuncComponent, IClassPainter
+public class UseCase extends MyShape implements IFuncComponent, IClassPainter
 {
 	Vector <String>		texts			= new Vector <>();
 	Dimension			defSize			= new Dimension(150, 40);
@@ -19,9 +19,11 @@ public class UseCase extends JPanel implements IFuncComponent, IClassPainter
 	boolean				isSelect		= false;
 	int					selectBoxSize	= 5;
 	CanvasPanelHandler	cph;
+	int selectedPort;
 
 	public UseCase(CanvasPanelHandler cph)
 	{
+		super(cph);
 		texts.add("New Use Case");
 		reSize();
 		this.setVisible(true);
@@ -103,5 +105,15 @@ public class UseCase extends JPanel implements IFuncComponent, IClassPainter
 		gra.fillRect(this.getWidth() - selectBoxSize,
 				this.getHeight() / 2 - selectBoxSize, selectBoxSize,
 				selectBoxSize * 2);
+	}
+	
+	public void setSelectedPort(int side) {
+		System.out.print("select side");
+		System.out.println(side);
+		this.selectedPort = side;
+		
+	}
+	public int getSelectedPort() {
+		return this.selectedPort;	
 	}
 }

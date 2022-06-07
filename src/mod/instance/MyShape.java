@@ -11,8 +11,8 @@ import bgWork.handler.CanvasPanelHandler;
 import mod.IClassPainter;
 import mod.IFuncComponent;
 
-public class BasicClass extends MyShape implements IFuncComponent, IClassPainter
-{
+public abstract class MyShape extends JPanel implements IFuncComponent, IClassPainter{
+	
 	Vector <String>		texts			= new Vector <>();
 	Dimension			defSize			= new Dimension(150, 25);
 	int					maxLength		= 20;
@@ -21,17 +21,9 @@ public class BasicClass extends MyShape implements IFuncComponent, IClassPainter
 	int					selectBoxSize	= 5;
 	CanvasPanelHandler	cph;
 	int selectedPort;
-
-	public BasicClass(CanvasPanelHandler cph)
-	{
-		super(cph);
-		texts.add("New Class");
-		texts.add("<empty>");
-		reSize();
-		this.setVisible(true);
-		this.setLocation(0, 0);
-		this.setOpaque(true);
-		this.cph = cph;
+	
+	public MyShape(CanvasPanelHandler cph) {
+		
 	}
 
 	@Override
@@ -64,7 +56,7 @@ public class BasicClass extends MyShape implements IFuncComponent, IClassPainter
 		}
 	}
 
-	@Override
+	
 	public void reSize()
 	{
 		switch (texts.size())
@@ -78,7 +70,7 @@ public class BasicClass extends MyShape implements IFuncComponent, IClassPainter
 		}
 	}
 
-	@Override
+	
 	public void setText(String text)
 	{
 		texts.clear();
@@ -113,30 +105,19 @@ public class BasicClass extends MyShape implements IFuncComponent, IClassPainter
 		this.isSelect = isSelect;
 	}
 
-	@Override
+	
 	public void paintSelect(Graphics gra)
 	{
-		gra.setColor(Color.BLACK);
-		gra.fillRect(this.getWidth() / 2 - selectBoxSize, 0, selectBoxSize * 2,
-				selectBoxSize);
-		gra.fillRect(this.getWidth() / 2 - selectBoxSize,
-				this.getHeight() - selectBoxSize, selectBoxSize * 2,
-				selectBoxSize);
-		gra.fillRect(0, this.getHeight() / 2 - selectBoxSize, selectBoxSize,
-				selectBoxSize * 2);
-		gra.fillRect(this.getWidth() - selectBoxSize,
-				this.getHeight() / 2 - selectBoxSize, selectBoxSize,
-				selectBoxSize * 2);
+		
 	}
 	
 	public void setSelectedPort(int side) {
-		System.out.print("select side");
-		System.out.println(side);
-		this.selectedPort = side;
+		
 		
 	}
 	
 	public int getSelectedPort() {
-		return this.selectedPort;	
+		return -1;
 	}
+
 }

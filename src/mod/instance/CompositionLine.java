@@ -15,7 +15,7 @@ import mod.IFuncComponent;
 import mod.ILinePainter;
 import java.lang.Math;
 
-public class CompositionLine extends JPanel
+public class CompositionLine extends MyLine
 		implements IFuncComponent, ILinePainter
 {
 	JPanel				from;
@@ -32,6 +32,7 @@ public class CompositionLine extends JPanel
 
 	public CompositionLine(CanvasPanelHandler cph)
 	{
+		super(cph);
 		this.setOpaque(false);
 		this.setVisible(true);
 		this.setMinimumSize(new Dimension(1, 1));
@@ -48,13 +49,15 @@ public class CompositionLine extends JPanel
 				fp.y - this.getLocation().y);
 		tpPrime = new Point(tp.x - this.getLocation().x,
 				tp.y - this.getLocation().y);
-		g.setColor(Color.BLACK);
-		g.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
-		paintArrow(g, tpPrime);
 		if (isSelect == true)
 		{
 			paintSelect(g);
 		}
+		else {
+			g.setColor(Color.BLACK);
+		}
+		g.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
+		paintArrow(g, tpPrime);
 	}
 
 	@Override
@@ -147,9 +150,7 @@ public class CompositionLine extends JPanel
 	@Override
 	public void paintSelect(Graphics gra)
 	{
-		gra.setColor(Color.BLACK);
-		gra.fillRect(fp.x, fp.y, selectBoxSize, selectBoxSize);
-		gra.fillRect(tp.x, tp.y, selectBoxSize, selectBoxSize);
+		gra.setColor(Color.GREEN);
 	}
 
 	public boolean isSelect()
@@ -160,5 +161,24 @@ public class CompositionLine extends JPanel
 	public void setSelect(boolean isSelect)
 	{
 		this.isSelect = isSelect;
+	}
+	public JPanel getFromShape()
+	{
+		return this.from;
+	}
+	
+	public int getFromSide()
+	{
+		return this.fromSide;
+	}
+	
+	public JPanel getToShape()
+	{
+		return this.to;
+	}
+	
+	public int getToSide()
+	{
+		return this.toSide;
 	}
 }

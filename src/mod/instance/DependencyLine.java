@@ -18,7 +18,7 @@ import bgWork.handler.CanvasPanelHandler;
 import mod.IFuncComponent;
 import mod.ILinePainter;
 
-public class DependencyLine extends JPanel implements IFuncComponent, ILinePainter {
+public class DependencyLine extends MyLine implements IFuncComponent, ILinePainter {
 	JPanel from;
 	int fromSide;
 	Point fp = new Point(0, 0);
@@ -32,6 +32,7 @@ public class DependencyLine extends JPanel implements IFuncComponent, ILinePaint
 	CanvasPanelHandler cph;
 
 	public DependencyLine(CanvasPanelHandler cph) {
+		super(cph);
 		this.setOpaque(false);
 		this.setVisible(true);
 		this.setMinimumSize(new Dimension(1, 1));
@@ -45,15 +46,19 @@ public class DependencyLine extends JPanel implements IFuncComponent, ILinePaint
 		renewConnect();
 		fpPrime = new Point(fp.x - this.getLocation().x, fp.y - this.getLocation().y);
 		tpPrime = new Point(tp.x - this.getLocation().x, tp.y - this.getLocation().y);
-		g.setColor(Color.BLACK);
-		Graphics2D g2d = (Graphics2D) g.create();
-		Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0);
-		g2d.setStroke(dashed);
-		g2d.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
-		paintArrow(g, tpPrime);
 		if (isSelect == true) {
 			paintSelect(g);
 		}
+		else {
+			g.setColor(Color.BLACK);
+		}
+		
+		Graphics2D g2d = (Graphics2D) g.create();
+		Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 9 }, 0);
+		g2d.setStroke(dashed);
+		g2d.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
+		paintArrow(g, tpPrime);
+		
 	}
 
 	@Override
@@ -136,9 +141,7 @@ public class DependencyLine extends JPanel implements IFuncComponent, ILinePaint
 
 	@Override
 	public void paintSelect(Graphics gra) {
-		gra.setColor(Color.BLACK);
-		gra.fillRect(fp.x, fp.y, selectBoxSize, selectBoxSize);
-		gra.fillRect(tp.x, tp.y, selectBoxSize, selectBoxSize);
+		gra.setColor(Color.GREEN);
 	}
 
 	public boolean isSelect() {
@@ -147,6 +150,25 @@ public class DependencyLine extends JPanel implements IFuncComponent, ILinePaint
 
 	public void setSelect(boolean isSelect) {
 		this.isSelect = isSelect;
+	}
+	public JPanel getFromShape()
+	{
+		return this.from;
+	}
+	
+	public int getFromSide()
+	{
+		return this.fromSide;
+	}
+	
+	public JPanel getToShape()
+	{
+		return this.to;
+	}
+	
+	public int getToSide()
+	{
+		return this.toSide;
 	}
 
 }

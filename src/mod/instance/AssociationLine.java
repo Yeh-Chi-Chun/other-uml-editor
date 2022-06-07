@@ -14,7 +14,7 @@ import mod.IFuncComponent;
 import mod.ILinePainter;
 import java.lang.Math;
 
-public class AssociationLine extends JPanel
+public class AssociationLine extends  MyLine
 		implements IFuncComponent, ILinePainter
 {
 	JPanel				from;
@@ -29,6 +29,7 @@ public class AssociationLine extends JPanel
 
 	public AssociationLine(CanvasPanelHandler cph)
 	{
+		super(cph);
 		this.setOpaque(false);
 		this.setVisible(true);
 		this.setMinimumSize(new Dimension(1, 1));
@@ -38,6 +39,7 @@ public class AssociationLine extends JPanel
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		
 		Point fpPrime;
 		Point tpPrime;
 		renewConnect();
@@ -45,12 +47,15 @@ public class AssociationLine extends JPanel
 				fp.y - this.getLocation().y);
 		tpPrime = new Point(tp.x - this.getLocation().x,
 				tp.y - this.getLocation().y);
-		g.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
-		paintArrow(g, tpPrime);
 		if (isSelect == true)
 		{
 			paintSelect(g);
 		}
+		else {
+			g.setColor(Color.BLACK);
+		}
+		g.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
+		paintArrow(g, tpPrime);
 	}
 
 	@Override
@@ -79,8 +84,6 @@ public class AssociationLine extends JPanel
 				mfp);
 		toSide = new AreaDefine().getArea(to.getLocation(), to.getSize(), mtp);
 		renewConnect();
-		System.out.println("from side " + fromSide);
-		System.out.println("to side " + toSide);
 	}
 
 	void renewConnect()
@@ -133,9 +136,15 @@ public class AssociationLine extends JPanel
 	@Override
 	public void paintSelect(Graphics gra)
 	{
-		gra.setColor(Color.BLACK);
-		gra.fillRect(fp.x, fp.y, selectBoxSize, selectBoxSize);
-		gra.fillRect(tp.x, tp.y, selectBoxSize, selectBoxSize);
+		gra.setColor(Color.GREEN);
+//		Point fpPrime;
+//		Point tpPrime;
+//		renewConnect();
+//		fpPrime = new Point(fp.x - this.getLocation().x,
+//				fp.y - this.getLocation().y);
+//		tpPrime = new Point(tp.x - this.getLocation().x,
+//				tp.y - this.getLocation().y);
+//		gra.drawLine(fpPrime.x, fpPrime.y, tpPrime.x, tpPrime.y);
 	}
 
 	public boolean isSelect()
@@ -146,5 +155,25 @@ public class AssociationLine extends JPanel
 	public void setSelect(boolean isSelect)
 	{
 		this.isSelect = isSelect;
+	}
+	
+	public JPanel getFromShape()
+	{
+		return this.from;
+	}
+	
+	public int getFromSide()
+	{
+		return this.fromSide;
+	}
+	
+	public JPanel getToShape()
+	{
+		return this.to;
+	}
+	
+	public int getToSide()
+	{
+		return this.toSide;
 	}
 }
